@@ -9,12 +9,11 @@ It includes single-agent, multi-agent, multimodal (vision + text), and human-in-
 
 | Script | Description | Screenshot / Test Result |
 |--------|-------------|-------------------------|
-| `single_agent.py` | Single-agent demo using DeepSeek for code/text tasks | ![Placeholder](docs/screenshots/single_agent.png) |
-| `multi-agent.py` | Multi-agent (Round Robin) demo – teacher & student agents | ![Placeholder](docs/screenshots/multi_agent.png) |
-| `multimodal_agent.py` | Vision + text processing using LLaVA | ![Placeholder](docs/screenshots/multimodal_agent.png) |
-| `human-in-the-loop.py` | QA workflow where one agent validates another | ![Placeholder](docs/screenshots/human_in_the_loop.png) |
+| `single_agent.py` | Single-agent demo using DeepSeek for code/text tasks |
+| `multi-agent.py` | Multi-agent (Round Robin) demo – teacher & student agents |
+| `multimodal_agent.py` | Vision + text processing using LLaVA         | 
+| `human-in-the-loop.py` | QA workflow where one agent validates another | 
 
-> Add your screenshots or exported test results in `docs/screenshots/` and update links above.
 
 ---
 ##  🧩 Highlights
