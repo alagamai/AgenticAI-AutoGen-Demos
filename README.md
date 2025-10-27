@@ -7,8 +7,8 @@ It includes single-agent, multi-agent, multimodal (vision + text), and human-in-
 
 ## 🌟 Example Scripts
 
-| Script | Description | Screenshot / Test Result |
-|--------|-------------|-------------------------|
+| Script | Description | 
+|--------|-------------|
 | `single_agent.py` | Single-agent demo using DeepSeek for code/text tasks |
 | `multi-agent.py` | Multi-agent (Round Robin) demo – teacher & student agents |
 | `multimodal_agent.py` | Vision + text processing using LLaVA         | 
