@@ -77,6 +77,6 @@ Select the above JSON file
 
 Click Load → then Start Chat
 
-🧪 Human-in-the-loop QA testing (DeepSeek model))
+🧪 Autogen Studio classroom team  QA testing (DeepSeek model))
 ![Classroom Team](screenshots/classroom-team.png)
 
