@@ -45,10 +45,13 @@ It includes single-agent, multi-agent, multimodal (vision + text), and human-in-
 git clone https://github.com/<yourusername>/AgenticAI-Demos.git
 cd AgenticAI-Demos
 
-2. **Run setup script**
+
+2. **Run installation  script**
  (creates virtual environment, installs dependencies, pulls Ollama model, starts server)
 
+source ./activate_env.sh
 bash setup.sh
+agstudio  - run this to bring up autogen studio 
 
 The setup script runs Ollama in the background. Keep it running while executing examples.
 
@@ -56,6 +59,24 @@ The setup script runs Ollama in the background. Keep it running while executing 
 
 Go to examples folder -> Open the script in PyCharm.
 
-Ensure the interpreter points to .venv.
+Ensure the interpreter points to .autogen venv.
 
-Run the script using Run → Run 'script_name'.
+Run the script using Run → Run 'script_name' or python3 script_name
+
+.
+🧠 Load the AutoGen Studio Project
+
+The repository includes a sample AutoGen Studio team project:
+
+📂 autogen-studio/.autogenstudio/teams/math_classroom_team.json
+
+To load it:
+
+Open AutoGen Studio (via agstudio )
+
+Go to Teams → Import / Load Team
+
+Select the above JSON file
+
+Click Load → then Start Chat
+
