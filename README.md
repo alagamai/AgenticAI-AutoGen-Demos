@@ -33,9 +33,6 @@ It includes single-agent, multi-agent, multimodal (vision + text), and human-in-
 
 🧰 Fully integrated with Ollama local inference
 
-
-
-
 ## 🚀 Quick Setup (PyCharm + Ollama)
 
 ---
@@ -79,4 +76,7 @@ Go to Teams → Import / Load Team
 Select the above JSON file
 
 Click Load → then Start Chat
+
+🧪 Human-in-the-loop QA testing (DeepSeek model))
+![Classroom Team](screenshots/classroom-team.png)
 
