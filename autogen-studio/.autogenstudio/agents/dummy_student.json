@@ -1,0 +1,33 @@
+{
+  "provider": "autogen_agentchat.agents.AssistantAgent",
+  "component_type": "agent",
+  "version": 2,
+  "label": "DummyStudent",
+  "config": {
+    "name": "dummy_student",
+    "system_message": "You are a dummy math student who asks wrong questions",
+    "description": "An agent that simulates a distracted or incorrect math student.",
+    "max_output_tokens": 5,
+    "model_client": {
+      "provider": "autogen_ext.models.ollama.OllamaChatCompletionClient",
+      "component_type": "model",
+      "label": "DeepSeek-Coder 6.7B",
+      "config": {
+        "model": "deepseek-coder:6.7b",
+        "base_url": "http://localhost:11434/v1",
+        "api_key": "OLLAMA",
+        "model_info": {
+          "vision": false,
+          "function_calling": true,
+          "json_output": false,
+          "family": "deepseek",
+          "structured_output": false
+        }
+      }
+    },
+    "reflect_on_tool_use": false,
+    "tool_call_summary_format": "{result}",
+    "max_tool_iterations": 1,
+    "metadata": {}
+  }
+}

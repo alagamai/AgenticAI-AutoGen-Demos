@@ -1,0 +1,138 @@
+{
+  "provider": "autogen_agentchat.teams.RoundRobinGroupChat",
+  "component_type": "team",
+  "version": 1,
+  "component_version": 1,
+  "description": "A single AssistantAgent (with a calculator tool) in a RoundRobinGroupChat team. ",
+  "label": "RoundRobin Math Team",
+  "config": {
+    "participants": [
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 2,
+        "label": "MathTeacher",
+        "config": {
+          "name": "math_teacher",
+          "system_message": "You are a kind and clear math teacher. Explain concepts very simply and guide the student.",
+          "description": "An agent that plays the role of a math teacher posting and reviewing questions.",
+          "max_output_tokens": 20,
+          "model_client": {
+            "provider": "autogen_ext.models.ollama.OllamaChatCompletionClient",
+            "component_type": "model",
+            "label": "DeepSeek-Coder 6.7B",
+            "config": {
+              "model": "deepseek-coder:6.7b",
+              "base_url": "http://localhost:11434/v1",
+              "api_key": "OLLAMA",
+              "temperature": 0.4,
+              "max_retries": 3,
+              "model_info": {
+                "vision": false,
+                "function_calling": true,
+                "json_output": false,
+                "family": "deepseek",
+                "structured_output": false
+              }
+            }
+          },
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "max_tool_iterations": 1,
+          "metadata": {}
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "label": "CuriousStudent",
+        "config": {
+          "name": "curious_student",
+          "description": "A smart and polite student who answers correctly and asks one short follow-up question.",
+          "system_message": "You are a curious math student who asks follow-up questions to understand the concept deeply",
+          "max_output_tokens": 20,
+          "model_client": {
+            "provider": "autogen_ext.models.ollama.OllamaChatCompletionClient",
+            "component_type": "model",
+            "label": "Ollama Mistral",
+            "config": {
+              "model": "mistral:instruct",
+              "base_url": "http://localhost:11434/v1",
+              "api_key": "OLLAMA"
+            }
+          },
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}"
+        }
+      },
+      {
+        "provider": "autogen_agentchat.agents.AssistantAgent",
+        "component_type": "agent",
+        "version": 2,
+        "label": "DummyStudent",
+        "config": {
+          "name": "dummy_student",
+          "system_message": "You are a dummy math student who asks wrong questions",
+          "description": "An agent that simulates a distracted or incorrect math student.",
+          "max_output_tokens": 5,
+          "model_client": {
+            "provider": "autogen_ext.models.ollama.OllamaChatCompletionClient",
+            "component_type": "model",
+            "label": "DeepSeek-Coder 6.7B",
+            "config": {
+              "model": "deepseek-coder:6.7b",
+              "base_url": "http://localhost:11434/v1",
+              "api_key": "OLLAMA",
+              "model_info": {
+                "vision": false,
+                "function_calling": true,
+                "json_output": false,
+                "family": "deepseek",
+                "structured_output": false
+              }
+            }
+          },
+          "reflect_on_tool_use": false,
+          "tool_call_summary_format": "{result}",
+          "max_tool_iterations": 1,
+          "metadata": {}
+        }
+      }
+    ],
+    "termination_condition": {
+      "provider": "autogen_agentchat.base.OrTerminationCondition",
+      "component_type": "termination",
+      "version": 1,
+      "component_version": 1,
+      "label": "OrTerminationCondition",
+      "config": {
+        "conditions": [
+          {
+            "provider": "autogen_agentchat.conditions.TextMentionTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation if a specific text is mentioned.",
+            "label": "TextMentionTermination",
+            "config": {
+              "text": "TERMINATE"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.conditions.MaxMessageTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation after a maximum number of messages have been exchanged.",
+            "label": "MaxMessageTermination",
+            "config": {
+              "max_messages": 10,
+              "include_agent_event": false
+            }
+          }
+        ]
+      }
+    },
+    "emit_team_events": false
+  }
+}

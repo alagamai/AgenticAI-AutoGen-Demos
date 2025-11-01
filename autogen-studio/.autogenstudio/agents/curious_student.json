@@ -1,0 +1,23 @@
+{
+  "provider": "autogen_agentchat.agents.AssistantAgent",
+  "component_type": "agent",
+  "label": "CuriousStudent",
+  "config": {
+    "name": "curious_student",
+    "description": "A smart and polite student who answers correctly and asks one short follow-up question.",
+    "system_message": "You are a curious math student who asks follow-up questions to understand the concept deeply",
+    "max_output_tokens": 20,
+    "model_client": {
+      "provider": "autogen_ext.models.ollama.OllamaChatCompletionClient",
+      "component_type": "model",
+      "label": "Ollama Mistral",
+      "config": {
+        "model": "mistral:instruct",
+        "base_url": "http://localhost:11434/v1",
+        "api_key": "OLLAMA"
+      }
+    },
+    "reflect_on_tool_use": false,
+    "tool_call_summary_format": "{result}"
+  }
+}

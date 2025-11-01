@@ -1,50 +1,90 @@
 #!/bin/bash
-# setup.sh - Run this before first use
+# ----------------------------------------------------
+# 🚀 Full Setup for AutoGen (Python + Studio)
+# ----------------------------------------------------
 
-# 1. Create and activate virtual environment
-if [ ! -d ".venv" ]; then
-    echo "Creating virtual environment..."
-    python3 -m venv .venv
+PROJECT_ROOT="$(pwd)"
+VENV_PATH="$PROJECT_ROOT/.autogen"
+AUTOGENSTUDIO_HOME="$PROJECT_ROOT/autogen-studio/.autogenstudio"
+
+echo "📁 Using project root: $PROJECT_ROOT"
+
+# 0️⃣ Check if env is activated
+if [[ -z "$VIRTUAL_ENV" ]]; then
+    echo "❌ ERROR: Virtual environment not activated."
+    echo "👉 Please run: source activate_env.sh"
+    echo "Then re-run: bash setup.sh"
+    exit 1
 fi
 
-echo "Activating virtual environment..."
-source .venv/bin/activate
+# Set AutoGen Studio home inside the project
+export AUTOGENSTUDIO_HOME="$AUTOGENSTUDIO_HOME"
+echo "📁 Setting AutoGen Studio home to: $AUTOGENSTUDIO_HOME"
 
-# 2. Upgrade pip
-echo "Upgrading pip..."
-pip install --upgrade pip
+# Create the directory if missing
+mkdir -p "$AUTOGENSTUDIO_HOME"
 
-# 3. Install Python dependencies
-echo "Installing dependencies..."
-pip install pyautogen autogen-ext openai ollama
 
-# 4. Pull Ollama models
+# 1️⃣ Ensure Python 3.11 is installed
+if ! command -v python3.11 &> /dev/null; then
+    echo "⚙️ Installing Python 3.11..."
+    brew install python@3.11
+fi
+
+# 2️⃣ Create virtual environment if missing
+if [ ! -d "$VENV_PATH" ]; then
+    echo "🧱 Creating virtual environment (.autogen)..."
+    python3.11 -m venv "$VENV_PATH"
+else
+    echo "✅ Virtual environment already exists."
+fi
+
+# 3️⃣ Activate env (redundant but safe)
+source "$VENV_PATH/bin/activate"
+
+# 4️⃣ Upgrade pip & wheel
+echo "⬆️ Upgrading pip, setuptools, and wheel..."
+pip install --upgrade pip setuptools wheel
+
+# 5️⃣ Install core AutoGen + Studio
+echo "📦 Installing AutoGen and dependencies..."
+pip install -U autogen-core==0.6.4 autogen-agentchat==0.6.4 autogen-ext==0.6.4
+pip install -U autogenstudio==0.4.3.dev2
+pip install openai ollama tiktoken
+
+# 6️⃣ Verify setup
+python -c "import autogen, autogenstudio; print('✅ AutoGen + Studio imported successfully')"
+
+# 7️⃣ Pull Ollama models
 MODELS=("deepseek-coder:6.7b" "llava:7b")
 for MODEL in "${MODELS[@]}"; do
-    echo "Pulling Ollama model: $MODEL ..."
-    ollama pull $MODEL
+    echo "📥 Pulling Ollama model: $MODEL ..."
+    ollama pull "$MODEL"
 done
 
-# 5. Kill any existing Ollama server running on default port
-echo "Checking for existing Ollama server..."
+# 8️⃣ Restart Ollama server cleanly
 PID=$(lsof -ti tcp:11434)
 if [ ! -z "$PID" ]; then
-    echo "Killing existing Ollama server with PID $PID ..."
-    kill -9 $PID
+    echo "🧹 Restarting Ollama server..."
+    kill -9 "$PID"
 fi
-
-# 6. Start Ollama server in the background
-echo "Starting Ollama server..."
-# The '&' at the end runs it in the background
 ollama serve &
 
-# Wait a few seconds to let the server start
 sleep 5
+curl http://localhost:11434/api/tags || echo "⚠️ Ollama not responding yet..."
 
+# 9️⃣ Set AutoGen Studio data path
+mkdir -p "$AUTOGENSTUDIO_HOME"
+export AUTOGENSTUDIO_HOME
+
+# 🔟 Done
 echo "--------------------------------------"
-echo "Setup complete! Ollama server is running in the background."
-echo "You can now run your Python scripts:"
-echo "  python basics.py       # for code/text tasks"
-echo "  python multimodal_agent.py  # for vision/image tasks"
+echo "✅ Setup Complete!"
+echo "Virtual Env: $VENV_PATH"
+echo "Studio Data: $AUTOGENSTUDIO_HOME"
+echo "--------------------------------------"
+echo "Next steps:"
+echo "  1️⃣ Run:  source activate_env.sh"
+echo "  2️⃣ Launch Studio UI:  autogenstudio ui"
 echo "--------------------------------------"
 

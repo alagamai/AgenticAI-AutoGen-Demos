@@ -1,0 +1,67 @@
+# --------------------------------------
+# 🚀 AgenticAI Manual Environment Setup
+# --------------------------------------
+
+# 1️⃣ Ensure Python 3.11 is installed
+brew install python@3.11
+
+# 2️⃣ Create a new venv
+python3.11 -m venv .venv311
+
+# 3️⃣ Activate the virtual environment
+source .venv311/bin/activate
+
+# 4️⃣ Upgrade pip & wheel
+pip install --upgrade pip setuptools wheel
+
+# 5️⃣ Install core AutoGen packages
+pip install -U autogen-core==0.6.4 autogen-agentchat==0.6.4 autogen-ext==0.6.4
+
+# 6️⃣ Install AutoGen Studio
+pip install -U autogenstudio==0.4.3.dev2
+
+
+# 7️⃣ Install supporting tools
+pip install openai ollama tiktoken
+
+# 8️⃣ Verify installation
+python -c "import autogen, autogenstudio; print('✅ AutoGen + Studio imported successfully')"
+
+# 9️⃣ Pull Ollama models (takes a while)
+# ollama pull deepseek-coder:6.7b
+# ollama pull llava:7b
+
+# 4. Pull Ollama models
+MODELS=("deepseek-coder:6.7b" "llava:7b")
+for MODEL in "${MODELS[@]}"; do
+    echo "Pulling Ollama model: $MODEL ..."
+    ollama pull $MODEL
+done
+
+
+# 🔟 Restart Ollama server cleanly
+PID=$(lsof -ti tcp:11434)
+if [ ! -z "$PID" ]; then kill -9 $PID; fi
+ollama serve &
+
+# 1️⃣1️⃣ Confirm Ollama is running
+curl http://localhost:11434/api/tags
+
+
+# Wait a few seconds to let the server start
+sleep 5
+
+echo "--------------------------------------"
+echo "Setup complete! Ollama server is running in the background."
+echo "You can now run your Python scripts:"
+echo "  python basics.py       # for code/text tasks"
+echo "  python multimodal_agent.py  # for vision/image tasks"
+echo "--------------------------------------"
+
+
+# 1️⃣2️⃣ Run your example
+#python examples/multi-agent-with-chatbot.py
+
+# 1️⃣3️⃣ Launch AutoGen Studio (UI dashboard)
+#autogenstudio ui 
+

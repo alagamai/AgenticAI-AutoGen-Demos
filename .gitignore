@@ -1,1 +1,29 @@
 ollama_key.txt
+.idea
+.gitignore
+# Ignore Python virtual environments
+.venv/
+.autogen/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Autogen Studio cache
+.autogenstudio/cache/
+.autogenstudio/tmp/
+
+# Environment and system files
+.env
+.DS_Store
+
+# Logs
+*.log
+
+# Model weights or large artifacts
+*.bin
+*.pt
+*.ckpt
+
+
