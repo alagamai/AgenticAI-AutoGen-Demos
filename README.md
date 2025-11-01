@@ -78,5 +78,6 @@ Select the above JSON file
 Click Load → then Start Chat
 
 🧪 Autogen Studio classroom team  QA testing (DeepSeek model))
-![multi agent](screenshots/classroom-team.png)
+![multi agent](screenshots/Classroom-Team.png)
+
 
