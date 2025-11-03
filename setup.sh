@@ -56,7 +56,7 @@ pip install openai ollama tiktoken
 python -c "import autogen, autogenstudio; print('✅ AutoGen + Studio imported successfully')"
 
 # 7️⃣ Pull Ollama models
-MODELS=("deepseek-coder:6.7b" "llava:7b")
+MODELS=("deepseek-coder:6.7b" "llava:7b" "llama3.1:latest")
 for MODEL in "${MODELS[@]}"; do
     echo "📥 Pulling Ollama model: $MODEL ..."
     ollama pull "$MODEL"
