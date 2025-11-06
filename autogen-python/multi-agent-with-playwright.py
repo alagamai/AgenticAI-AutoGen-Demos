@@ -1,49 +1,73 @@
 import asyncio
-from pathlib import Path
+import os
+import subprocess
 
-from autogen_agentchat.ui import Console
-from autogen_ext.tools.mcp import StdioServerParams, mcp_server_tools, McpWorkbench
-from autogen_agentchat.agents import AssistantAgent
-from autogen_core import CancellationToken
 from autogen_ext.models.ollama import OllamaChatCompletionClient
+from autogen_ext.tools.mcp import McpWorkbench, StdioServerParams
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.teams import RoundRobinGroupChat
+from autogen_agentchat.conditions import TextMessageTermination
+from autogen_agentchat.ui import Console
 
 
 async def main():
+    # ✅ 1. Ensure the test folder exists
+    folder_path = "/Users/alagammainagappan/PycharmProjects/AgenticAI/autogen-python/test-folder"
+    os.makedirs(folder_path, exist_ok=True)
 
-    desktop = Path.home() / "PycharmProjects" / "AgenticAI"
-    # Set up server parameters to start the MCP Filesystem server via npx
-    # server_params = StdioServerParams(
-    #     command="npx",
-    #     args=["-y", "@modelcontextprotocol/server-filesystem",
-    #           "/Users/alagammainagappan/Desktop"
-    #           ]
+    # ✅ 2. Ensure Playwright is installed (optional but helpful)
+    # try:
+    #     subprocess.run(["npx", "playwright", "--version"], check=True)
+    # except subprocess.CalledProcessError:
+    #     print("Installing Playwright...")
+    #     subprocess.run(["npx", "playwright", "install", "--with-deps"], check=True)
 
-    fs_server = StdioServerParams(
+    # 3️⃣ Define MCP servers with explicit runtime for Mac compatibility
+    fs_params = StdioServerParams(
         command="npx",
-        args=["@modelcontextprotocol/server-filesystem", "/Users/alagammainagappan/PycharmProjects/agstudio-demo/AI-Playwright-multi-agent"]
+        args=["@modelcontextprotocol/server-filesystem", folder_path],
+        runtime="node"
     )
 
-    pw_server = StdioServerParams(
-    command = "npx",
-    args = [
-        "@playwright/mcp@latest",
-        "--headless",
-    ],
-
+    pw_params = StdioServerParams(
+        command="npx",
+        args=["-y", "@executeautomation/playwright-mcp-server"],
+        runtime="node"
     )
-    # Discover all tools exposed by the MCP Filesystem server
-    mcp_wb = McpWorkbench(fs_server, pw_server)
 
-    async with mcp_wb as mcp_tool:
-        ollama_client = OllamaChatCompletionClient(model="mistral:instruct")
+    # 4️⃣ Choose a local Ollama model
+    ollama_client = OllamaChatCompletionClient(model="llama3.1:latest")
 
-        # Create an AssistantAgent that can use the MCP tools
-        agent = AssistantAgent(
-            name="playwright_builder",
+    # 5️⃣ Create MCP workbenches and initialize them explicitly
+    async with McpWorkbench(fs_params) as fs_wb, McpWorkbench(pw_params) as pw_wb:
+        await fs_wb.initialize()
+        await pw_wb.initialize()
+
+        fs_agent = AssistantAgent(
+            "filesystem_agent",
             model_client=ollama_client,
-            workbench=mcp_tool,  # MCP tools for filesystem access
+            workbench=fs_wb,
+            model_client_stream=False  # disable streaming for clearer logs
         )
-        await Console(agent.run_stream(task="create a playwright project under folder test-pw, write script to automate test to go to url https://alagamai.vercel.app/ and enter access code qa-alagamai and click login"))
+
+        pw_agent = AssistantAgent(
+            "playwright_agent",
+            model_client=ollama_client,
+            workbench=pw_wb,
+            model_client_stream=False  # disable streaming for clearer logs
+        )
+
+        # 6️⃣ Create team & run multi-agent workflow with relative path prompt
+        team = RoundRobinGroupChat(
+            [fs_agent, pw_agent],
+            termination_condition=TextMessageTermination(source="playwright_agent")
+        )
+
+        await Console(
+            team.run_stream(
+                task="Create a new Playwright project in the current directory and verify installation."
+            )
+        )
 
 
 if __name__ == "__main__":

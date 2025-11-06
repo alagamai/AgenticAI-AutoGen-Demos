@@ -5,8 +5,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/.venv311" />
       <excludeFolder url="file://$MODULE_DIR$/.venv312" />
+      <excludeFolder url="file://$MODULE_DIR$/.autogen" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 virtualenv at ~/PycharmProjects/AgenticAI/.venv311" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.11 virtualenv at ~/PycharmProjects/AgenticAI/.autogen" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

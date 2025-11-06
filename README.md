@@ -77,7 +77,15 @@ Select the above JSON file
 
 Click Load → then Start Chat
 
+
+🧪 Human-in-the-loop AI Interviewer Wrokflow  (llama3.2:1b model))
+![AI-Interviewer1](screenshots/AI_Interviewer1.png)
+![AI-Interviewer2](screenshots/AI_Interviewer2.png)
+![AI-Interviewe3r](screenshots/AI_Interviewe31.png)
+
+
+
 🧪 Autogen Studio classroom team  QA testing (DeepSeek model))
-![multi agent](https://github.com/alagamai/AgenticAI-AutoGen-Demos/blob/main/screenshots/classroom-team.png)
+![multi agent 1 ](https://github.com/alagamai/AgenticAI-AutoGen-Demos/blob/main/screenshots/classroom-team.png)
 
 
