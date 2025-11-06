@@ -83,6 +83,10 @@ Then click Start Chat
 ![AI-Interviewer2](screenshots/AI_Interviewer2.png)
 ![AI-Interviewer3](screenshots/AI_Interviewer3.png)
 
+🧪 Human-in-the-loop QA testing (DeepSeek model))
+![Human In The Loop](screenshots/human1.png)
+![Human In The Loop](screenshots/human2.png)
+
 
 🧪 Autogen Studio classroom team  QA testing (DeepSeek model))
 ![multi agent1](https://github.com/alagamai/AgenticAI-AutoGen-Demos/blob/main/screenshots/classroom-team.png)
