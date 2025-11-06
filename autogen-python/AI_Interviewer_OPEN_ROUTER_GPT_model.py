@@ -13,12 +13,12 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-key = os.getenv("")
+
+openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
 
 
 # Define your async main function
 async def main():
-    openrouter_api_key = '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'
 
     # Create a client for OpenRouter
     model_client = OpenAIChatCompletionClient(
@@ -28,20 +28,15 @@ async def main():
         model_info={
             "type": "chat",
             "vision": False,
-            "function_calling": False,
+            "function_calling": True,
+            "structured_output": True,
             "json_output": False,
-            "context_length": 32768,
-            "input_cost_per_token": 0,
-            "output_cost_per_token": 0,
             "family": "openrouter",
-            "structured_output": False
-
+            "context_length": 131072,
+            "input_cost_per_token": 0,
+            "output_cost_per_token": 0
         },
-
-        extra_headers={
-            "HTTP-Referer": "http://localhost",
-            "X-Title": "Autogen Interview App"
-        }
+        extra_headers={"HTTP-Referer": "http://localhost", "X-Title": "Autogen Interview App"}
 
     )
     result = await model_client.create(

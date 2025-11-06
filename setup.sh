@@ -7,6 +7,9 @@ PROJECT_ROOT="$(pwd)"
 VENV_PATH="$PROJECT_ROOT/.autogen"
 AUTOGENSTUDIO_HOME="$PROJECT_ROOT/autogen-studio/.autogenstudio"
 
+export OPENROUTER_API_KEY="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"
+
+
 echo "📁 Using project root: $PROJECT_ROOT"
 
 # 0️⃣ Check if env is activated
