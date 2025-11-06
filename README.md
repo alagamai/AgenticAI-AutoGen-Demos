@@ -95,6 +95,11 @@ The repository includes a sample AutoGen Studio team project:
 
 ---
 
+# 🧪 Human-in-the-loop AI Interviewer workflow  (Open Router openai/gpt-oss-20b:free  model)
+![AI-Interviewer4](screenshots/open-router-gpt-op.png)
+
+---
+
 # 🧪 Human-in-the-loop QA testing (DeepSeek model)
 
 ![Human In The Loop](screenshots/human1.png)
