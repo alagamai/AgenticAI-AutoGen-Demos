@@ -85,6 +85,6 @@ Then click Start Chat
 
 
 🧪 Autogen Studio classroom team  QA testing (DeepSeek model))
-![multi agent 1 ](https://github.com/alagamai/AgenticAI-AutoGen-Demos/blob/main/screenshots/classroom-team.png)
+![multi agent1](https://github.com/alagamai/AgenticAI-AutoGen-Demos/blob/main/screenshots/classroom-team.png)
 
 
