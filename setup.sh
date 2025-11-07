@@ -52,6 +52,7 @@ echo "📦 Installing AutoGen and dependencies..."
 pip install -U autogen-core==0.6.4 autogen-agentchat==0.6.4 autogen-ext==0.6.4
 pip install -U autogenstudio==0.4.3.dev2
 pip install openai ollama tiktoken
+pip install streamlit
 
 # 6️⃣ Verify setup
 python -c "import autogen, autogenstudio; print('✅ AutoGen + Studio imported successfully')"

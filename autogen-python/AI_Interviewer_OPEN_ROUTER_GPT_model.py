@@ -19,6 +19,7 @@ openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
 
 # Define your async main function
 async def main():
+    # print("KEY IN PYTHON =", repr(openrouter_api_key))
 
     # Create a client for OpenRouter
     model_client = OpenAIChatCompletionClient(
