@@ -16,3 +16,16 @@ headers = {
 response = requests.get(url, headers=headers)
 
 print(response.json())
+
+# curl https://openrouter.ai/api/v1/chat/completions \
+#   -H "Content-Type: application/json" \
+#   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+#   -H "HTTP-Referer: http://localhost" \
+#   -H "X-Title: Test" \
+#   -d '{
+#     "model": "openai/gpt-oss-20b",
+#     "messages": [
+#       {"role": "user", "content": "Tell me a joke"}
+#     ]
+#   }'
+#
